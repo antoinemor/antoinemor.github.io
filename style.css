@@ -8,33 +8,34 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   height:100%;
-  background:linear-gradient(0deg,rgba(50,50,50,0.7),rgba(50,50,50,0.7)),url("images/background2.jpg");
+  background:linear-gradient(0deg,rgba(50,50,50,0.8),rgba(50,50,50,0.7)),url("images/background2.jpg");
   background-size:cover;
   -o-background-size: cover;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-	color: #312F2F;
-	font-size: 25px;
-  font-family: 'Varela', sans-serif;
 }
 
 h1 {
 	color:#E6E4E6;
-	font-weight: lighter;
-	font-size: 50px;
+	font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 4px;
 	text-align: center;
-
 }
 
 h2 {
-	color: #A88872;
-	font-weight: lighter;
-	font-size: 30px;
-}	
+  color:#E6E4E6;
+  font-size: 20px;
+  font-weight: 100;
+  text-align: center;
+}
+
 p {
 	font-size: 14px;
+  font-weight: 200;
+  letter-spacing: 1px;
 }
 
 a {
@@ -68,6 +69,9 @@ i {
   padding-left: 5%;
   padding-right: 5%;
   color: white;
+  vertical-align: center;
+  width: 60%;
+  margin: 0 auto; 
 }
 
 #footer{
