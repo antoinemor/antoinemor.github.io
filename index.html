@@ -5,236 +5,340 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antoine Moreau — High-Flying Advisory</title>
   <meta name="description" content="I help teams design go-to-market systems and operating platforms that actually scale.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#04122c">
+
   <meta property="og:title" content="Antoine Moreau — High-Flying Advisory">
   <meta property="og:description" content="I help teams design go-to-market systems and operating platforms that actually scale.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://antoinemo.com">
+  <meta property="og:image" content="https://antoinemo.com/assets/images/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Antoine Moreau — High-Flying Advisory">
+  <meta name="twitter:description" content="I help teams design go-to-market systems and operating platforms that actually scale.">
+  <meta name="twitter:image" content="https://antoinemo.com/assets/images/og.jpg">
+
   <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/favicon-180.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/images/bg.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      /* Sampled from the photograph */
+      --sky-deep:  #04122c;
+      --sky-mid:   #0a3a72;
+      --ink:       #f2f6fb;
+      --ink-soft:  #a9bdd4;
+      --ink-dim:   #7f96b0;
+      --contrail:  rgba(233, 240, 248, 0.22);
+      --accent:    #6fb3e8;
+
+      --gutter: clamp(1.5rem, 6vw, 6.5rem);
+      --pad-y:  clamp(2rem, 5vh, 4rem);
     }
 
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      color: #fff;
-      background: #0a0a0a;
+      min-height: 100svh;
+      background: var(--sky-deep);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    /* Background layers */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-    }
+    /* ---------- Stage: photograph, scrim, grain ---------- */
 
-    .bg-image {
-      position: absolute;
-      inset: 0;
-      background: url('assets/images/bg.jpg') center center / cover no-repeat;
-    }
+    .stage { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--sky-deep); }
 
-    .bg-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(18, 18, 18, 0.3);
-    }
-
-    .bg-chevrons {
-      position: absolute;
-      inset: 0;
-    }
-
-    .bg-chevrons svg {
+    .stage img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      object-position: 52% 76%;
+      display: block;
+      transform: scale(1.08);
+      animation: descend 18s cubic-bezier(0.16, 0.6, 0.2, 1) forwards;
     }
 
-    /* Content */
-    .container {
+    /* Directional scrim keyed to the sky's own navy, not neutral black, so the
+       type sits in deepening sky rather than under a grey wash. The left ramp
+       is deliberately steep: it holds the text column and swallows the near end
+       of the contrail, then clears fast so the jet, horizon and cloud deck stay
+       crisp across the right two thirds. */
+    .scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(100deg,
+          rgba(4, 18, 44, 0.93) 0%,
+          rgba(4, 18, 44, 0.86) 30%,
+          rgba(4, 18, 44, 0.52) 50%,
+          rgba(4, 18, 44, 0.14) 68%,
+          rgba(4, 18, 44, 0.00) 80%),
+        linear-gradient(to top,
+          rgba(4, 18, 44, 0.78) 0%,
+          rgba(4, 18, 44, 0.26) 14%,
+          rgba(4, 18, 44, 0.00) 34%),
+        radial-gradient(130% 100% at 44% 44%,
+          rgba(4, 18, 44, 0.00) 60%,
+          rgba(4, 18, 44, 0.22) 100%);
+    }
+
+    /* Fine grain: kills gradient banding, gives the blend a filmic surface. */
+    .grain {
+      position: absolute; inset: 0;
+      opacity: 0.35;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    }
+
+    /* ---------- Frame ---------- */
+
+    .frame {
       position: relative;
       z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: clamp(2.5rem, 8vh, 5rem);
+      padding: var(--pad-y) var(--gutter);
     }
 
-    .layout {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-    }
-
-    .content {
-      max-width: 40rem;
-      text-align: left;
-    }
-
-    .title {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 700;
-      font-size: clamp(3rem, 10vw, 6rem);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: #fff;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease 0.15s forwards;
-    }
-
-    .tagline {
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.3em;
-      color: #3DA6F2;
-      margin-bottom: 1rem;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease forwards;
-    }
-
-    .description {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.7);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease 0.3s forwards;
-    }
-
-    /* Social icons sidebar */
-    .socials {
+    .id {
+      align-self: center;
+      max-width: 34rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s ease 0.45s forwards;
+      align-items: flex-start;
+      gap: 1.5rem;
     }
 
-    .socials a {
+    /* ---------- Eyebrow ---------- */
+
+    .eyebrow {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: rgba(255, 255, 255, 0.7);
-      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      gap: 0.75rem;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
     }
 
-    .socials a:hover {
-      background: rgba(61, 166, 242, 0.15);
-      color: #3DA6F2;
-      border-color: rgba(61, 166, 242, 0.3);
+    .eyebrow::before {
+      content: "";
+      width: 2rem;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.6;
     }
 
-    .socials svg {
-      width: 1.2rem;
-      height: 1.2rem;
-      fill: currentColor;
+    /* ---------- Name ---------- */
+
+    .name {
+      font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+      font-variation-settings: "wdth" 112, "wght" 620;
+      font-weight: 620;
+      font-size: clamp(2.6rem, 8vw, 4.75rem);
+      line-height: 0.94;
+      letter-spacing: 0.005em;
+      text-transform: uppercase;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
     }
 
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ---------- Copy ---------- */
+
+    .lead {
+      margin-block-start: 1.75rem;
+      font-size: 1.0625rem;
+      line-height: 1.68;
+      color: var(--ink-soft);
+      max-width: 33rem;
+      text-wrap: pretty;
     }
 
-    @media (max-width: 640px) {
-      .layout {
-        flex-direction: column;
-        gap: 2rem;
+    .aside {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--ink-dim);
+      max-width: 27rem;
+      text-wrap: balance;
+    }
+
+    /* ---------- Ways to reach him ---------- */
+
+    .ways { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .rule {
+      height: 1px;
+      border: 0;
+      background: var(--contrail);
+      transform-origin: left center;
+      animation: draw 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.55s backwards;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem clamp(1.25rem, 3vw, 2.25rem);
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-dim);
+      padding: 0.375rem 0;
+      transition: color 0.25s ease;
+    }
+
+    .links a svg { width: 0.9375rem; height: 0.9375rem; fill: currentColor; flex: none; }
+
+    .links a .label { position: relative; }
+
+    .links a .label::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -3px;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .links a:hover, .links a:focus-visible { color: var(--ink); }
+    .links a:hover .label::after, .links a:focus-visible .label::after { transform: scaleX(1); }
+
+    .links .mail {
+      margin-inline-start: auto;
+      color: var(--ink-soft);
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 0.8125rem;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    /* ---------- Entrance ---------- */
+
+    .reveal {
+      animation: rise 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+      clip-path: inset(-20% -20% -20% -20%);
+    }
+    .reveal:nth-child(1) { animation-delay: 0.15s; }
+    .reveal:nth-child(2) { animation-delay: 0.28s; }
+    .reveal:nth-child(3) { animation-delay: 0.42s; }
+    .reveal:nth-child(4) { animation-delay: 0.54s; }
+    .links { animation: rise 0.95s cubic-bezier(0.2, 0.7, 0.2, 1) 0.72s backwards; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes draw   { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes descend { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      .stage img { transform: none; }
+    }
+
+    /* ---------- Narrow ---------- */
+
+    @media (max-width: 46rem) {
+      /* Portrait crops horizontally only, so the contrail's height is fixed and
+         lands mid-paragraph. Pan to the far right of the frame instead: the jet
+         is lost, but the copy gets a clean sky-to-cloud ground to sit on. */
+      .stage img { object-position: 100% 50%; }
+
+      .scrim {
+        background:
+          linear-gradient(to bottom,
+            rgba(4, 18, 44, 0.74) 0%,
+            rgba(4, 18, 44, 0.58) 42%,
+            rgba(4, 18, 44, 0.88) 100%);
       }
-      .content {
-        text-align: left;
-      }
-      .socials {
-        flex-direction: row;
-        gap: 0.75rem;
-      }
+
+      .id { gap: 1.25rem; }
+      .lead { margin-block-start: 1.25rem; font-size: 1rem; line-height: 1.62; }
+      .aside { font-size: 0.8125rem; }
+
+      .links { gap: 0.25rem 1.25rem; }
+      .links a { font-size: 0.6875rem; letter-spacing: 0.12em; gap: 0.4375rem; }
+      .links a svg { width: 0.875rem; height: 0.875rem; }
+      .links .mail { margin-inline-start: 0; flex-basis: 100%; padding-top: 0.25rem; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
-  <div class="bg">
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
-    <div class="bg-chevrons" id="chevrons"></div>
-    <script>
-      (function() {
-        function draw() {
-          var el = document.getElementById('chevrons');
-          var w = window.innerWidth;
-          var h = window.innerHeight;
-          // 120° chevron → 60° half-angle → dx = h/2 / tan(60°)
-          var dx = (h / 2) / Math.tan(Math.PI / 3);
-          var positions = [0, 0.3, 0.6, 0.9];
-          var lines = positions.map(function(p) {
-            var x = p * w;
-            return '<polyline points="' + x + ',0 ' + (x + dx) + ',' + (h / 2) + ' ' + x + ',' + h + '" />';
-          }).join('');
-          el.innerHTML = '<svg width="' + w + '" height="' + h + '" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1.5" stroke-linecap="round">' + lines + '</svg>';
-        }
-        draw();
-        window.addEventListener('resize', draw);
-      })();
-    </script>
+  <div class="stage">
+    <img src="assets/images/bg.jpg" alt="" aria-hidden="true" fetchpriority="high">
+    <div class="scrim"></div>
+    <div class="grain"></div>
   </div>
 
-  <div class="container">
-    <div class="layout">
-      <div class="content">
-        <p class="tagline">High-Flying Advisory</p>
-        <h1 class="title">Antoine Moreau</h1>
-        <p class="description">I help teams design go-to-market systems and operating platforms that actually scale. Not with decks, but through grounded execution. I've built revenue engines from scratch, reworked workflows into products, and helped teams scale past $100M&nbsp;ARR. Outside work: flying, architecture, motorcycles, food, photography, and good&nbsp;sound.</p>
-      </div>
-      <nav class="socials">
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/antoine-moreau/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+  <main class="frame">
+    <header class="id">
+      <p class="eyebrow reveal">High-Flying Advisory</p>
+      <h1 class="name reveal"><span>Antoine</span><span>Moreau</span></h1>
+      <p class="lead reveal">I help teams design go-to-market systems and operating platforms that actually scale. Not with decks, but through grounded execution. I've built revenue engines from scratch, reworked workflows into products, and helped teams scale past $100M&nbsp;ARR.</p>
+      <p class="aside reveal">Outside work: flying, architecture, motorcycles, food, photography, and good&nbsp;sound.</p>
+    </header>
+
+    <footer class="ways">
+      <hr class="rule">
+      <nav class="links">
+        <a href="https://www.linkedin.com/in/antoine-moreau/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span class="label">LinkedIn</span>
         </a>
-        <!-- X / Twitter -->
-        <a href="https://x.com/antoine_mor" target="_blank" rel="noopener" aria-label="X">
-          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <a href="https://x.com/antoine_mor" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span class="label">X</span>
         </a>
-        <!-- GitHub -->
-        <a href="https://github.com/antoinemor" target="_blank" rel="noopener" aria-label="GitHub">
-          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        <a href="https://github.com/antoinemor" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span class="label">GitHub</span>
         </a>
-        <!-- Plane / Aviation -->
-        <a href="https://fly-am.com" target="_blank" rel="noopener" aria-label="Flying">
-          <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        <a href="https://fly-am.com" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+          <span class="label">Fly AM</span>
         </a>
-        <!-- Email -->
-        <a href="mailto:hello@antoinemo.com" aria-label="Email">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <a class="mail" href="mailto:hello@antoinemo.com">
+          <span class="label">hello@antoinemo.com</span>
         </a>
       </nav>
-    </div>
-  </div>
+    </footer>
+  </main>
 </body>
 </html>
